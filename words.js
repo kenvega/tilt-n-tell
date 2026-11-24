@@ -36,9 +36,9 @@ const CATEGORIES = [
     name: "Películas",
     emoji: "🎬",
     words: [
-      "Titanic", "El Rey León", "Toy Story", "Coco", "Intensa-Mente",
+      "Titanic", "El Rey León", "Toy Story", "Coco", "IntensaMente",
       "Buscando a Nemo", "Shrek", "Frozen", "Los Increíbles",
-      "Monsters Inc.", "Up: Una Aventura de Altura", "Cars", "Ratatouille",
+      "Monsters Inc.", "Cars", "Ratatouille",
       "Mi Villano Favorito", "Minions", "La Era de Hielo", "Madagascar",
       "Kung Fu Panda", "Encanto", "Moana", "Enredados", "Zootopia",
       "La Sirenita", "La Bella y la Bestia", "Aladdín", "Mulán", "Hércules",
@@ -49,7 +49,7 @@ const CATEGORIES = [
       "Batman", "Superman", "Rocky", "Gladiador", "Avatar", "Jumanji",
       "Los Cazafantasmas", "Indiana Jones", "Terminator", "Forrest Gump",
       "Náufrago", "Hombres de Negro", "Barbie", "Roma", "Amores Perros",
-      "No se Aceptan Devoluciones", "Relatos Salvajes",
+      "Relatos Salvajes",
     ],
   },
   {

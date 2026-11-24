@@ -9,7 +9,7 @@ const DURATION_OPTIONS = [
   { seconds: 90, label: "1:30" },
   { seconds: 120, label: "2 min" },
 ];
-const DEFAULT_DURATION = 60;
+const DEFAULT_DURATION = 90;
 
 // Tilt is measured as how much the screen faces up (+1) or down (-1).
 // 0 = screen vertical (phone on the forehead). sin(37°) ≈ 0.6.
@@ -307,6 +307,26 @@ document.addEventListener("visibilitychange", () => {
 // Phases: "position" -> "countdown" -> "playing" <-> "feedback" -> "timeup"
 let game = null;
 
+// "All categories" mode, built automatically from every category in
+// words.js. Words that appear in more than one category are kept once
+// (the first category they appear in is used for the label).
+const ALL_CATEGORIES = (() => {
+  const sourceOf = new Map(); // word -> category name
+  for (const cat of CATEGORIES) {
+    for (const word of cat.words) {
+      if (!sourceOf.has(word)) sourceOf.set(word, cat.name);
+    }
+  }
+  return {
+    id: "all",
+    name: "Todas las categorías", // shown on the results screen
+    cardName: "Todas",            // shown on the home screen card
+    emoji: "🎲",
+    words: [...sourceOf.keys()],
+    sourceOf,
+  };
+})();
+
 function shuffle(list) {
   const a = [...list];
   for (let i = a.length - 1; i > 0; i--) {
@@ -506,7 +526,9 @@ function nextWord() {
     game.deckIndex = 0;
   }
   game.currentWord = game.deck[game.deckIndex++];
-  setMain(game.currentWord, "");
+  // In "all categories" mode, show which category the word comes from.
+  const label = game.category.sourceOf ? game.category.sourceOf.get(game.currentWord) : "";
+  setMain(game.currentWord, label);
 }
 
 function answer(result) {
@@ -600,7 +622,7 @@ function renderDurations() {
 
 function renderCategories() {
   els.categoryGrid.replaceChildren();
-  for (const cat of CATEGORIES) {
+  for (const cat of [ALL_CATEGORIES, ...CATEGORIES]) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "category-card";
@@ -609,7 +631,7 @@ function renderCategories() {
     emoji.textContent = cat.emoji;
     const name = document.createElement("span");
     name.className = "name";
-    name.textContent = cat.name;
+    name.textContent = cat.cardName || cat.name;
     const count = document.createElement("span");
     count.className = "count";
     count.textContent = `${cat.words.length} palabras`;
