@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es-419">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#14122b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Tilt n' Tell">
+  <title>Tilt n' Tell</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HOME: pick duration + category -->
+  <section id="screen-home" class="screen active">
+    <header class="home-header">
+      <div>
+        <h1>Tilt n' Tell</h1>
+        <p class="tagline">Adivina la palabra antes de que se acabe el tiempo</p>
+      </div>
+      <button id="sound-toggle" class="icon-btn" type="button"></button>
+    </header>
+
+    <div class="field">
+      <p class="field-label">Duración de la ronda</p>
+      <div id="duration-options" class="segmented" role="group" aria-label="Duración de la ronda"></div>
+    </div>
+
+    <div class="field">
+      <p class="field-label">Elige una categoría</p>
+      <div id="category-grid" class="category-grid"></div>
+    </div>
+  </section>
+
+  <!-- HOW TO PLAY (shown once per visit, before the first round) -->
+  <section id="screen-howto" class="screen info-screen">
+    <div class="big-icon">📱</div>
+    <h2>Cómo jugar</h2>
+
+    <div class="card">
+      <h3>🔒 Primero: bloquea la rotación</h3>
+      <p>Así la pantalla no gira mientras inclinas el teléfono.</p>
+      <ul class="device-tips">
+        <li><strong>iPhone:</strong> desliza desde la esquina superior derecha y toca el candado.</li>
+        <li><strong>Android:</strong> desliza desde arriba y desactiva «Rotación automática».</li>
+      </ul>
+    </div>
+
+    <ol class="steps">
+      <li>Pon el teléfono en tu frente, de lado, con la pantalla hacia tus amigos.</li>
+      <li>Tus amigos te describen la palabra sin decirla.</li>
+      <li><strong>Inclina hacia abajo ⬇️</strong> si adivinaste. ¡Punto!</li>
+      <li><strong>Inclina hacia arriba ⬆️</strong> para pasar a otra palabra.</li>
+    </ol>
+
+    <div class="actions">
+      <button id="howto-ok" class="btn-primary" type="button">¡Entendido!</button>
+      <button class="btn-secondary js-back-home" type="button">Volver</button>
+    </div>
+  </section>
+
+  <!-- iPHONE ONLY: explain the permission prompt before it appears -->
+  <section id="screen-permission" class="screen info-screen">
+    <div class="big-icon">🧭</div>
+    <h2>Necesitamos un permiso</h2>
+    <p>Para saber cuándo inclinas el teléfono, el juego necesita acceso al movimiento del dispositivo.</p>
+    <p>Al continuar, tu iPhone te mostrará una ventana. Toca <strong>«Permitir»</strong>.</p>
+    <div class="actions">
+      <button id="permission-ok" class="btn-primary" type="button">Continuar</button>
+      <button class="btn-secondary js-back-home" type="button">Volver</button>
+    </div>
+  </section>
+
+  <!-- BLOCKED: permission denied / no sensor / not https -->
+  <section id="screen-blocked" class="screen info-screen">
+    <div class="big-icon">🚫</div>
+    <h2 id="blocked-title"></h2>
+    <p id="blocked-message"></p>
+    <p id="blocked-hint" class="hint"></p>
+    <div class="actions">
+      <button id="blocked-retry" class="btn-primary" type="button">Intentar de nuevo</button>
+      <button class="btn-secondary js-back-home" type="button">Volver</button>
+    </div>
+  </section>
+
+  <!-- GAME -->
+  <section id="screen-game" class="screen">
+    <div id="game-stage" class="stage">
+      <div class="game-bar">
+        <button id="game-quit" class="icon-btn small" type="button" aria-label="Salir de la ronda">✕</button>
+        <span id="game-timer" class="game-timer">1:00</span>
+        <span id="game-score" class="game-score">★ 0</span>
+      </div>
+      <div class="game-main">
+        <div class="game-word-box"><div id="game-word" class="game-word"></div></div>
+        <p id="game-sub" class="game-sub"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="screen-results" class="screen">
+    <div class="results-head">
+      <p id="results-category" class="results-category"></p>
+      <h2>¡Se acabó!</h2>
+      <p id="results-score" class="results-score"></p>
+    </div>
+
+    <div class="results-group is-correct">
+      <h3>Adivinadas <span id="correct-count"></span></h3>
+      <ul id="correct-list"></ul>
+    </div>
+    <div class="results-group is-pass">
+      <h3>Pasadas <span id="passed-count"></span></h3>
+      <ul id="passed-list"></ul>
+    </div>
+
+    <div class="actions">
+      <button id="play-again" class="btn-primary" type="button">Jugar otra vez</button>
+      <button class="btn-secondary js-back-home" type="button">Cambiar categoría</button>
+    </div>
+  </section>
+
+  <script src="words.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
